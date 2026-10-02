@@ -9,7 +9,33 @@
 body {
   margin: 0;
   font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  color-scheme: dark;
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #5dcbe0;
+  outline-offset: 2px;
+}
+
+:where(a, button) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.transition-colors,
+.transition-transform {
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Thin scrollbars fit an ops-console aesthetic better than default ones */
@@ -18,14 +44,14 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0c10;
+  background: #0b1015;
 }
 ::-webkit-scrollbar-thumb {
-  background: #232832;
+  background: #2a3947;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2c323d;
+  background: #3a4d5d;
 }
 
 @keyframes pulse-dot {
@@ -39,4 +65,15 @@ body {
 }
 .animate-pulse-dot {
   animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

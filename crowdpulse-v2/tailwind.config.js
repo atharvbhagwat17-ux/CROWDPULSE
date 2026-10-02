@@ -4,20 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: "#0A0C10",
-        panel: "#12151B",
-        panel2: "#171B22",
-        border: "#232832",
+        base: "#0B1015",
+        panel: "#121A23",
+        panel2: "#1A2530",
+        panel3: "#202E3A",
+        border: "#2A3947",
         text: {
-          DEFAULT: "#E6E9ED",
-          muted: "#7C8592",
-          faint: "#4B525E",
+          DEFAULT: "#E8EEF3",
+          muted: "#A0AFBC",
+          faint: "#718190",
         },
         risk: {
-          low: "#3FB579",
-          medium: "#D9A441",
-          high: "#E5484D",
-          info: "#4C8DFF",
+          low: "#42C98A",
+          medium: "#F4B84F",
+          high: "#F16C67",
+          info: "#54A9F5",
+          ai: "#5DCBE0",
+          warning: "#F29B58",
         },
       },
       fontFamily: {
