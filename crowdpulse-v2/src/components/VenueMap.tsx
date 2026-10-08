@@ -2,17 +2,17 @@ import type { Zone } from "../types";
 import RiskBadge from "./RiskBadge";
 
 const riskBorder: Record<string, string> = {
-  LOW: "border-risk-low/50",
-  MEDIUM: "border-risk-medium/50",
-  HIGH: "border-risk-high/60",
+  LOW: "border-risk-low/55",
+  MEDIUM: "border-risk-medium/60",
+  HIGH: "border-risk-high/70",
   CRITICAL: "border-risk-high",
 };
 
 const riskGlow: Record<string, string> = {
-  LOW: "shadow-[inset_0_0_0_1px_rgba(63,181,121,0.15)]",
-  MEDIUM: "shadow-[inset_0_0_0_1px_rgba(217,164,65,0.15)]",
-  HIGH: "shadow-[inset_0_0_0_1px_rgba(229,72,77,0.2)]",
-  CRITICAL: "shadow-[inset_0_0_0_1px_rgba(229,72,77,0.3)]",
+  LOW: "bg-risk-low/[0.07] shadow-[inset_0_0_0_1px_rgba(63,181,121,0.16),0_6px_18px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_0_0_1px_rgba(63,181,121,0.25),0_10px_24px_rgba(0,0,0,0.25)]",
+  MEDIUM: "bg-risk-medium/[0.08] shadow-[inset_0_0_0_1px_rgba(217,164,65,0.17),0_6px_18px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_0_0_1px_rgba(217,164,65,0.27),0_10px_24px_rgba(0,0,0,0.25)]",
+  HIGH: "bg-risk-high/[0.09] shadow-[inset_0_0_0_1px_rgba(229,72,77,0.22),0_6px_18px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_0_0_1px_rgba(229,72,77,0.34),0_10px_24px_rgba(0,0,0,0.25)]",
+  CRITICAL: "bg-risk-high/[0.13] shadow-[inset_0_0_0_1px_rgba(229,72,77,0.32),0_6px_18px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_0_0_1px_rgba(229,72,77,0.45),0_10px_24px_rgba(0,0,0,0.25)]",
 };
 
 export default function VenueMap({
@@ -26,11 +26,21 @@ export default function VenueMap({
 }) {
   return (
     <div
-      className="relative w-full bg-panel2 border border-border rounded-sm overflow-hidden"
+      data-command-light-card
+      data-light-tone="info"
+      className="command-glass-panel command-light-card relative isolate w-full overflow-hidden rounded-xl border border-risk-info/35"
       style={{ height }}
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 48%, rgba(76,141,255,0.08), transparent 56%), radial-gradient(ellipse at 0% 100%, rgba(63,181,121,0.04), transparent 42%)",
+        }}
+      />
       {/* faint grid backdrop to read as a floor plan rather than empty space */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]" preserveAspectRatio="none">
+      <svg className="absolute inset-0 h-full w-full opacity-[0.10]" preserveAspectRatio="none">
         <defs>
           <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
             <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#E6E9ED" strokeWidth="1" />
@@ -40,23 +50,25 @@ export default function VenueMap({
       </svg>
 
       {/* directional flow arrows: main corridor feeding into exits */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" preserveAspectRatio="none">
         <defs>
-          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-            <path d="M0,0 L8,4 L0,8 Z" fill="#4C8DFF" opacity="0.55" />
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#62c9e5" opacity="0.8" />
           </marker>
         </defs>
-        <line x1="35%" y1="46%" x2="20%" y2="46%" stroke="#4C8DFF" strokeWidth="1.5" opacity="0.5" markerEnd="url(#arrow)" />
-        <line x1="65%" y1="46%" x2="80%" y2="46%" stroke="#4C8DFF" strokeWidth="1.5" opacity="0.5" markerEnd="url(#arrow)" />
-        <line x1="30%" y1="72%" x2="30%" y2="80%" stroke="#4C8DFF" strokeWidth="1.5" opacity="0.5" markerEnd="url(#arrow)" />
-        <line x1="70%" y1="72%" x2="70%" y2="80%" stroke="#4C8DFF" strokeWidth="1.5" opacity="0.5" markerEnd="url(#arrow)" />
+        <line className="command-flow-line" x1="35%" y1="46%" x2="20%" y2="46%" stroke="#73d5eb" strokeWidth="2.25" opacity="0.82" markerEnd="url(#arrow)" />
+        <line className="command-flow-line command-flow-line-delayed" x1="65%" y1="46%" x2="80%" y2="46%" stroke="#73d5eb" strokeWidth="2.25" opacity="0.82" markerEnd="url(#arrow)" />
+        <line className="command-flow-line" x1="30%" y1="72%" x2="30%" y2="80%" stroke="#73d5eb" strokeWidth="2.25" opacity="0.82" markerEnd="url(#arrow)" />
+        <line className="command-flow-line command-flow-line-delayed" x1="70%" y1="72%" x2="70%" y2="80%" stroke="#73d5eb" strokeWidth="2.25" opacity="0.82" markerEnd="url(#arrow)" />
       </svg>
 
       {zones.map((zone) => (
         <button
           key={zone.id}
           onClick={() => onSelectZone?.(zone)}
-          className={`absolute flex flex-col justify-between p-2.5 rounded-sm border bg-panel/90 backdrop-blur-[1px] text-left transition-colors hover:bg-panel2 ${riskBorder[zone.risk]} ${riskGlow[zone.risk]}`}
+          data-command-light-card
+          data-light-tone={zone.risk.toLowerCase()}
+          className={`command-zone command-light-card absolute z-[1] flex flex-col justify-between rounded-lg border bg-panel/75 p-2.5 text-left shadow-[inset_0_1px_0_rgba(220,245,255,0.08)] backdrop-blur-md transition-all duration-200 hover:z-10 hover:-translate-y-0.5 hover:bg-panel/90 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-risk-info/70 ${riskBorder[zone.risk]} ${riskGlow[zone.risk]}`}
           style={{
             left: `${zone.position.x * 100}%`,
             top: `${zone.position.y * 100}%`,
@@ -64,13 +76,13 @@ export default function VenueMap({
             height: `${zone.position.h * 100}%`,
           }}
         >
-          <div className="flex items-start justify-between gap-1">
-            <span className="text-xs font-medium leading-tight">{zone.name}</span>
+          <div className="relative z-[1] flex items-start justify-between gap-1">
+            <span className="text-xs font-semibold leading-tight text-text">{zone.name}</span>
             <RiskBadge risk={zone.risk} />
           </div>
-          <div className="font-mono text-2xs text-text-muted">
-            Occ. <span className="text-text">{zone.occupancy}</span>
-            <span className="text-text-faint"> / {zone.capacity}</span>
+          <div className="relative z-[1] font-mono text-2xs text-text-muted">
+            Occ. <span className="font-semibold text-text">{zone.occupancy}</span>
+            <span className="text-text-muted"> / {zone.capacity}</span>
           </div>
         </button>
       ))}

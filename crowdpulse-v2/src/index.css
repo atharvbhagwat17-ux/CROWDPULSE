@@ -67,6 +67,332 @@ h1 {
   animation: pulse-dot 1.6s ease-in-out infinite;
 }
 
+.command-center-surface {
+  color: #e8eef3;
+  background-color: #0d151d;
+  background-image:
+    radial-gradient(ellipse at 4% 4%, rgba(29, 120, 165, 0.18), transparent 36%),
+    radial-gradient(ellipse at 96% 34%, rgba(50, 103, 173, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(14, 25, 35, 0.42), transparent 58%);
+}
+
+.command-center-surface .text-text-faint {
+  color: #9aabb9;
+}
+
+.command-center-surface .text-text-muted {
+  color: #b1bec9;
+}
+
+.command-glass-panel {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(73, 152, 195, 0.11), transparent 50%),
+    linear-gradient(145deg, rgba(28, 43, 57, 0.88), rgba(14, 23, 33, 0.94));
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(228, 246, 255, 0.11),
+    inset 0 -1px 0 rgba(133, 184, 213, 0.035);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
+  backdrop-filter: blur(20px) saturate(125%);
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.command-glass-panel:hover,
+.command-glass-panel:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(150, 205, 235, 0.34);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.36),
+    0 0 22px rgba(65, 158, 204, 0.07),
+    inset 0 1px 0 rgba(236, 250, 255, 0.16),
+    inset 0 -1px 0 rgba(133, 184, 213, 0.05);
+}
+
+.command-hero {
+  min-height: 164px;
+  background:
+    radial-gradient(ellipse at 84% 8%, rgba(58, 153, 205, 0.17), transparent 40%),
+    linear-gradient(115deg, rgba(27, 45, 61, 0.93), rgba(14, 25, 37, 0.91) 65%, rgba(15, 31, 45, 0.95));
+}
+
+.command-hero-grid {
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(151, 211, 238, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(151, 211, 238, 0.13) 1px, transparent 1px);
+  background-position: right 24px top 20px;
+  background-size: 28px 28px;
+  mask-image: linear-gradient(90deg, transparent 45%, black 100%);
+}
+
+.command-hero-ring {
+  box-shadow: 0 0 44px rgba(84, 169, 245, 0.07), inset 0 0 28px rgba(84, 169, 245, 0.025);
+  animation: hero-ring-breathe 8s ease-in-out infinite;
+}
+
+.command-hero-ring-inner {
+  animation-delay: -3s;
+}
+
+.command-hero-signal {
+  width: min(340px, 42vw);
+  height: 3px;
+  opacity: 0.8;
+}
+
+.command-hero-signal span {
+  width: 5px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(97, 201, 231, 0.75);
+}
+
+.command-hero-signal span:nth-child(3n) {
+  height: 5px;
+}
+
+.command-hero-signal span:nth-child(4n) {
+  width: 13px;
+  background: rgba(84, 169, 245, 0.48);
+}
+
+.command-hero-signal i {
+  width: 34%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(97, 201, 231, 0.62), transparent);
+}
+
+.command-light-card {
+  --command-light-x: 50%;
+  --command-light-y: 50%;
+  --command-light-color: rgba(107, 204, 244, 0.12);
+}
+
+@property --command-light-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --command-light-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+.command-light-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    145px circle at var(--command-light-x) var(--command-light-y),
+    var(--command-light-color),
+    transparent 74%
+  );
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    --command-light-x 180ms ease-out,
+    --command-light-y 180ms ease-out;
+}
+
+.command-light-card::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border: 1px solid rgba(210, 240, 255, 0.08);
+  border-radius: inherit;
+  background: radial-gradient(
+    160px circle at var(--command-light-x) var(--command-light-y),
+    rgba(225, 248, 255, 0.07),
+    transparent 72%
+  );
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 240ms ease,
+    --command-light-x 180ms ease-out,
+    --command-light-y 180ms ease-out;
+}
+
+.command-light-card:hover::before,
+.command-light-card:focus-within::before,
+.command-light-panel:hover::before,
+.command-light-panel:focus-within::before {
+  opacity: 1;
+}
+
+.command-light-card:hover::after,
+.command-light-card:focus-within::after,
+.command-light-panel:hover::after,
+.command-light-panel:focus-within::after {
+  opacity: 0.85;
+}
+
+.command-light-card[data-light-tone="low"] {
+  --command-light-color: rgba(63, 181, 121, 0.12);
+}
+
+.command-light-card[data-light-tone="medium"] {
+  --command-light-color: rgba(217, 164, 65, 0.13);
+}
+
+.command-light-card[data-light-tone="high"],
+.command-light-card[data-light-tone="critical"] {
+  --command-light-color: rgba(229, 72, 77, 0.12);
+}
+
+.command-light-card[data-light-tone="info"] {
+  --command-light-color: rgba(84, 185, 231, 0.12);
+}
+
+.command-glass-panel.command-light-card:hover::before,
+.command-glass-panel.command-light-card:focus-within::before {
+  opacity: 0.78;
+}
+
+.command-hero.command-light-card:hover::before,
+.command-hero.command-light-card:focus-within::before {
+  opacity: 0.5;
+}
+
+.command-zone {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.command-zone::before {
+  z-index: 0;
+  background:
+    radial-gradient(
+      145px circle at var(--command-light-x) var(--command-light-y),
+      var(--command-light-color),
+      transparent 74%
+    ),
+    linear-gradient(145deg, rgba(238, 248, 255, 0.045), transparent 52%);
+  opacity: 0.72;
+}
+
+.command-zone:hover {
+  filter: brightness(1.08);
+}
+
+.command-zone[data-light-tone="low"] {
+  --command-light-color: rgba(63, 181, 121, 0.20);
+}
+
+.command-zone[data-light-tone="medium"] {
+  --command-light-color: rgba(217, 164, 65, 0.22);
+}
+
+.command-zone[data-light-tone="high"],
+.command-zone[data-light-tone="critical"] {
+  --command-light-color: rgba(229, 72, 77, 0.23);
+}
+
+.command-zone[data-light-tone="high"],
+.command-zone[data-light-tone="critical"] {
+  animation: risk-zone-breathe 5.8s ease-in-out infinite;
+}
+
+.command-flow-line {
+  stroke-dasharray: 7 12;
+  animation: venue-flow 8s linear infinite;
+}
+
+.command-flow-line-delayed {
+  animation-delay: -4s;
+}
+
+.kpi-signal-bars {
+  display: inline-flex;
+  height: 18px;
+  align-items: end;
+  gap: 2px;
+  opacity: 0.62;
+}
+
+.kpi-signal-bars i {
+  width: 3px;
+  height: 30%;
+  border-radius: 3px;
+  background: currentColor;
+}
+
+.kpi-signal-bars i:nth-child(2) { height: 58%; }
+.kpi-signal-bars i:nth-child(3) { height: 38%; }
+.kpi-signal-bars i:nth-child(4) { height: 82%; }
+.kpi-signal-bars i:nth-child(5) { height: 52%; }
+.kpi-signal-bars.default { color: #54a9f5; }
+.kpi-signal-bars.low { color: #42c98a; }
+.kpi-signal-bars.medium { color: #f4b84f; }
+.kpi-signal-bars.high { color: #f16c67; }
+
+.kpi-icon-orbit {
+  box-shadow: 0 0 22px currentColor;
+  box-shadow: 0 0 20px rgba(84, 169, 245, 0.10), inset 0 1px 0 rgba(238, 250, 255, 0.12);
+}
+
+.command-light-panel[data-light-tone="high"],
+.command-light-panel[data-light-tone="critical"] {
+  background:
+    radial-gradient(ellipse at 0% 18%, rgba(229, 72, 77, 0.07), transparent 58%),
+    linear-gradient(145deg, rgba(35, 39, 50, 0.9), rgba(15, 23, 33, 0.94));
+}
+
+.command-light-panel[data-light-tone="medium"] {
+  background:
+    radial-gradient(ellipse at 0% 18%, rgba(217, 164, 65, 0.065), transparent 58%),
+    linear-gradient(145deg, rgba(35, 42, 50, 0.9), rgba(15, 23, 33, 0.94));
+}
+
+.command-light-panel[data-light-tone="low"] {
+  background:
+    radial-gradient(ellipse at 0% 18%, rgba(63, 181, 121, 0.065), transparent 58%),
+    linear-gradient(145deg, rgba(31, 44, 51, 0.9), rgba(15, 23, 33, 0.94));
+}
+
+.command-light-panel[data-light-tone="high"]::after,
+.command-light-panel[data-light-tone="critical"]::after {
+  border-left-color: rgba(241, 108, 103, 0.22);
+}
+
+@keyframes venue-flow {
+  to { stroke-dashoffset: -76; }
+}
+
+@keyframes risk-zone-breathe {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.035); }
+}
+
+@keyframes hero-ring-breathe {
+  0%, 100% { opacity: 0.72; }
+  50% { opacity: 1; }
+}
+
+.command-light-panel[data-light-tone="low"]:hover {
+  border-color: rgba(66, 201, 138, 0.48);
+}
+
+.command-light-panel[data-light-tone="medium"]:hover {
+  border-color: rgba(244, 184, 79, 0.5);
+}
+
+.command-light-panel[data-light-tone="high"]:hover,
+.command-light-panel[data-light-tone="critical"]:hover {
+  border-color: rgba(241, 108, 103, 0.52);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -75,5 +401,12 @@ h1 {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .command-flow-line,
+  .command-zone[data-light-tone="high"],
+  .command-zone[data-light-tone="critical"],
+  .command-hero-ring {
+    animation: none !important;
   }
 }

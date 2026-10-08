@@ -18,67 +18,84 @@ interface AlertCardProps {
   onViewZone?: () => void;
 }
 
+const severityStyle = {
+  LOW: "border-l-risk-low hover:border-risk-low/60",
+  MEDIUM: "border-l-risk-medium hover:border-risk-medium/60",
+  HIGH: "border-l-risk-high hover:border-risk-high/70",
+  CRITICAL: "border-l-risk-high hover:border-risk-high",
+} as const;
+
 export default function AlertCard({ alert, compact = false, showStatus = false, onAcknowledge, onResolve, onViewZone }: AlertCardProps) {
   return (
-    <div className="border border-border bg-panel2 rounded-sm p-3 flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <RiskBadge risk={alert.severity} />
-          <span className="text-xs font-medium">{alert.zoneName}</span>
-          {showStatus && (
-            <span className="text-2xs font-mono uppercase tracking-wider text-text-faint border border-border px-1.5 py-0.5 rounded-sm">
-              {alert.status}
-            </span>
-          )}
+    <div
+      data-command-light-card
+      data-light-tone={alert.severity.toLowerCase()}
+      className={`command-glass-panel command-light-card command-light-panel group relative isolate overflow-hidden rounded-lg border border-white/[0.12] border-l-[3px] p-3.5 ${severityStyle[alert.severity]}`}
+    >
+      <div className="relative z-[1] flex flex-col gap-2.5">
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <RiskBadge risk={alert.severity} />
+            <span className="truncate text-xs font-semibold text-text">{alert.zoneName}</span>
+            {showStatus && (
+              <span className="rounded-md border border-border px-1.5 py-0.5 font-mono text-2xs uppercase tracking-wider text-text-faint">
+                {alert.status}
+              </span>
+            )}
+          </div>
+          <span className="shrink-0 rounded-full border border-white/[0.10] bg-black/20 px-2.5 py-1 font-mono text-[10px] text-text-muted">
+            {timeAgo(alert.timestamp)}
+          </span>
         </div>
-        <span className="text-2xs font-mono text-text-faint">{timeAgo(alert.timestamp)}</span>
+
+        <p className="text-[13px] font-medium leading-snug text-text">{alert.description}</p>
+
+        {!compact && (
+          <div className="space-y-2 border-t border-border/80 pt-2.5 text-2xs leading-relaxed text-text-muted">
+            <p>
+              <span className="font-semibold uppercase tracking-wider text-text-faint">Reason</span>
+              <span className="mx-1.5 text-border">/</span>
+              {alert.cause}
+            </p>
+            <p>
+              <span className="font-semibold uppercase tracking-wider text-risk-info">Recommended</span>
+              <span className="mx-1.5 text-border">/</span>
+              {alert.recommendation}
+            </p>
+          </div>
+        )}
+
+        {(onAcknowledge || onResolve || onViewZone) && (
+          <div className="flex flex-wrap gap-2 border-t border-border/70 pt-2.5">
+            {onAcknowledge && (
+              <button
+                onClick={onAcknowledge}
+                disabled={alert.status !== "ACTIVE"}
+                className="rounded-md border border-risk-medium/40 bg-risk-medium/10 px-2.5 py-1 text-2xs text-risk-medium transition-colors hover:bg-risk-medium/20 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Acknowledge
+              </button>
+            )}
+            {onResolve && (
+              <button
+                onClick={onResolve}
+                disabled={alert.status === "RESOLVED"}
+                className="rounded-md border border-risk-low/40 bg-risk-low/10 px-2.5 py-1 text-2xs text-risk-low transition-colors hover:bg-risk-low/20 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Resolve
+              </button>
+            )}
+            {onViewZone && (
+              <button
+                onClick={onViewZone}
+                className="rounded-md border border-border px-2.5 py-1 text-2xs text-text-muted transition-colors hover:bg-panel hover:text-text"
+              >
+                View Zone
+              </button>
+            )}
+          </div>
+        )}
       </div>
-
-      <p className="text-xs text-text leading-snug">{alert.description}</p>
-
-      {!compact && (
-        <div className="text-2xs text-text-muted leading-snug space-y-1 pt-1 border-t border-border">
-          <p>
-            <span className="text-text-faint">Reason: </span>
-            {alert.cause}
-          </p>
-          <p>
-            <span className="text-text-faint">Recommendation: </span>
-            {alert.recommendation}
-          </p>
-        </div>
-      )}
-
-      {(onAcknowledge || onResolve || onViewZone) && (
-        <div className="flex gap-2 pt-1">
-          {onAcknowledge && (
-            <button
-              onClick={onAcknowledge}
-              disabled={alert.status !== "ACTIVE"}
-              className="text-2xs px-2.5 py-1 rounded-sm border border-risk-medium/40 bg-risk-medium/10 text-risk-medium hover:bg-risk-medium/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Acknowledge
-            </button>
-          )}
-          {onResolve && (
-            <button
-              onClick={onResolve}
-              disabled={alert.status === "RESOLVED"}
-              className="text-2xs px-2.5 py-1 rounded-sm border border-risk-low/40 bg-risk-low/10 text-risk-low hover:bg-risk-low/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Resolve
-            </button>
-          )}
-          {onViewZone && (
-            <button
-              onClick={onViewZone}
-              className="text-2xs px-2.5 py-1 rounded-sm border border-border text-text-muted hover:text-text hover:bg-panel transition-colors"
-            >
-              View Zone
-            </button>
-          )}
-        </div>
-      )}
     </div>
   );
 }
